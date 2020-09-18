@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <center>
+        <h1>翻斗棋</h1><br />关卡选择：
+        <select id="gameLevel">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+        <hr />
+
+        <input type="button" οnclick="initGame()" value="开始游戏" />
+        <div id="gameDiv"></div>
+        <br />
+        <hr />
+
+
+
+        <h2>游戏规则说明</h2>
+        <ol>
+            <li>1.任意点击一个地方，则自身和其相邻的格子颜色会发生变化</li>
+            <li>2.xxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+            <li>3.xxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+        </ol>
+
+    </center>
+</body>
+<script>
+    //初始化游戏界面
+    function initGame() {
+        var list = parseInt(document.getElementById("gameLevel").value);
+        /*
+         * 创建新的游戏界面之前对之前的游戏界面进行判断，
+         * 一种是根据表格id判断是否存在
+         * 另一种是根据gameDiv子元素是否存在判断
+         */
+        if (document.getElementById("tableId") != null) {
+            document.getElementById("gameDiv").removeChild(document.getElementById("tableId"));
+        }
+
+        //创建表格
+        var table = document.createElement("table");
+        table.border = "1px";
+        table.id = "tableId";
+        for (var i = 0; i < list; i++) {
+            var rows = table.insertRow();
+            for (var j = 0; j < list; j++) {
+                var cell = rows.insertCell();
+                cell.style.width = "50px";
+                cell.style.height = "50px";
+                cell.style.backgroundColor = "black";
+
+                //获取每个格子的坐标位置
+                cell.id = i + "," + j;
+                cell.innerText = i + "," + j;
+                //设置点击表格变黑白的点击事件
+                cell.οnclick = click;
+            }
+        }
+        document.getElementById("gameDiv").appendChild(table);
+    }
+
+    function click() {
+        //获取事件源对象，这个事件源就是单元格
+        var cell = event.srcElement;
+        //取得单元格id
+        var cellId = cell.id;
+
+        //得到横轴和纵轴
+        var x = parseInt(cellId.split(",")[0]);
+        var y = parseInt(cellId.split(",")[1]);
+
+
+        //改变当前单元格的颜色
+        changeColor(cellId);
+
+        var up = (x - 1) + "," + y;
+        var down = (x + 1) + "," + y;
+        var left = x + "," + (y - 1);
+        var right = x + "," + (y + 1);
+        changeColor(up);
+        changeColor(down);
+        changeColor(left);
+        changeColor(right);
+
+        if (validatePass() == true) {
+            var choice = confirm("恭喜通过，是否进入下一关");
+            if (choice) {
+                var gameLevel = document.getElementById("gameLevel");
+                gameLevel.selectedIndex++; //下拉列表框selectedIndex的属性++表示选择的项目下移
+                initGame();
+            }
+        }
+    }
+
+    function changeColor(cellId) {
+        try {
+            if (document.getElementById(cellId).style.backgroundColor == "white") {
+                document.getElementById(cellId).style.backgroundColor = "black";
+            } else {
+                document.getElementById(cellId).style.backgroundColor = "white";
+            }
+        } catch (e) {
+            //TODO handle the exception
+        }
+    }
+
+    //检查是否通关
+    function validatePass() {
+        var result = true;
+        var table = document.getElementById("tableId");
+        var length = table.rows.length;
+        for (var i = 0; i < length; i++) {
+            var row = table.rows[i];
+            for (var j = 0; j < length; j++) {
+                var cell = row.cells[j].id;
+                if (row.cells[j].style.backgroundColor == "black") {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+</script>
+
+</html>
