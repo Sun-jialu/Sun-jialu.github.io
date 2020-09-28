@@ -28,8 +28,9 @@ export default {
 </script>
 <style scoped lang='scss'>
 .home {
-//   background-image: url("../../img/背景.image");
-//   background: url('~@/img/背景.image') center center no-repeat;
+  background: url("../../../src/img/beijin.png");
+  height: 1000px;
+  // background: url('~@/img/背景.image') center center no-repeat;
   width: 100%;
   .homeHead {
     width: 100%;
