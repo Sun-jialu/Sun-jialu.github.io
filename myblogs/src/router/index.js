@@ -17,11 +17,22 @@ const routes = [
     path: '/study',
     name: 'study',
     component: () => import('../views/study/study.vue')
+  },
+  {
+    path: '/sjl',
+    name: 'sjl',
+    component: () => import('../views/sjl/sjl.vue')
+  },
+  {
+    path: '/zds',
+    name: 'zds',
+    component: () => import('../views/zds/zds.vue')
   }
+  
 ]
 
 const router = new VueRouter({
-  mode: 'history',//打包注释
+  // mode: 'history',//打包注释
   base: process.env.BASE_URL,
   routes
 })
