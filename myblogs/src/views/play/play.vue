@@ -1,24 +1,22 @@
 <template>
-    <!--  -->
-    <div class="play">
-        play
-    </div>
+  <!--  -->
+  <div class="play">
+    <!-- <router-link to="/play/tuixiangzi">推箱子</router-link>-->
+    <!-- <router-view></router-view>  -->
+    <div @click="toTuixiangzi()">推箱子</div>
+  </div>
 </template>
 <script>
-
 export default {
-    data(){
-        return {
-            
-        }
+  data() {
+    return {};
+  },
+  methods: {
+    toTuixiangzi() {
+      this.$router.replace("/play/tuixiangzi");
     },
-    methods: {
-        
-    }
-}
+  },
+};
 </script>
 <style scoped>
-.play{
-    
-}
 </style>

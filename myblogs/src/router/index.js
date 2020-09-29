@@ -11,7 +11,12 @@ const routes = [
   {
     path: '/play',
     name: 'play',
-    component: () => import('../views/play/play.vue')
+    component: () => import('../views/play/play.vue'),
+    children: [{
+      path: '/play/tuixiangzi',
+      // name: 'tuixiangzi',
+      component: () => import('../views/play/tuixiangzi/index.vue'),
+    }]
   },
   {
     path: '/study',
@@ -27,12 +32,16 @@ const routes = [
     path: '/zds',
     name: 'zds',
     component: () => import('../views/zds/zds.vue')
+  }, {
+    //一级路由中默认显示的vue页面
+    path: "*",
+    redirect: "/home"
   }
-  
+
 ]
 
 const router = new VueRouter({
-  // mode: 'history',//打包注释
+  mode: 'history',//打包注释
   base: process.env.BASE_URL,
   routes
 })
